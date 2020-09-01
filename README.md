@@ -1,7 +1,7 @@
 - Create directory for project and then clone it:
 ```
 mkdir sp && cd sp
-git clone http://sp.forextester.com:81/root/sp.git
+git clone https://github.com/mikhail1706/contacts_db.git
 ```
 
 - In base directory create directory for logs and local.py file 
