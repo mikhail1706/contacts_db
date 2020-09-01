@@ -25,4 +25,4 @@ python3 manage.py makemigrations
 python3 manage.py migrate
 python manage.py runserver
 ````
-open [localhost](http://127.0.0.1:8000)
+open [localhost](http://127.0.0.1:8000/contacts/)
