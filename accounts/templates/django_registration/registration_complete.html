@@ -1,0 +1,21 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block title %}Registration complete{% endblock %}
+
+{% block content %}
+
+    <v-col cols="4" class="text-center">
+        <h1> Registration completed </h1>
+        Thank you for your time. To your e-mail sent
+        confirmation code. You need to confirm registration,
+        just by clicking on the specified link. <br/> <br/>
+
+    </v-col>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/connect_vuetify.js' %}"></script>
+{% endblock %}
+

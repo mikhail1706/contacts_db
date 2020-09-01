@@ -1,0 +1,17 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block title %} Activation {% endblock %}
+
+{% block content %}
+    <v-col cols="4" class="text-center">
+        <h1>Activation</h1>
+        Hi, {{ account }}!<br/>
+        Your account has been activated. Now, you can <a href="{% url 'login' %}">log in</a> into the site.
+    </v-col>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/connect_vuetify.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <style>
+        [v-cloak] > * {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div id="app" v-cloak="">
+    <v-app>
+        <v-container style="height: 100%">
+            <v-row align-content="center" justify="center" style="height: 100%">
+                {% block content %}
+
+                {% endblock %}
+            </v-row>
+        </v-container>
+    </v-app>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<!-- Compiled and minified JavaScript -->
+{% block js %}{% endblock %}
+</body>
+</html>

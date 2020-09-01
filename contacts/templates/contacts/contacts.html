@@ -1,0 +1,145 @@
+{% extends 'contacts/base.html' %}
+{% load static %}
+
+{% block title %} Contacts {% endblock %}
+
+{% block content %}
+    <div id="contacts">
+        <v-app>
+            <v-container>
+                <v-row align-content="center" justify="center">
+                    <v-select v-model="citySearch" type="text" :items="cities" label="City" clearable></v-select>
+                    <v-select v-model="countrySearch" type="text" :items="countries" label="Country"
+                              clearable></v-select>
+                    <v-data-table
+                            item-key="id"
+                            :headers="headers"
+                            :items="customFilter()"
+                            :items-per-page="5"
+                            class="elevation-1"
+                            @click:clear-icon="search = ''"
+                    >
+                        <template v-slot:top>
+                            <v-toolbar flat color="white">
+                                <v-toolbar-title>Contacts</v-toolbar-title>
+                                <v-divider
+                                        class="mx-4"
+                                        inset
+                                        vertical
+                                ></v-divider>
+                                <v-spacer></v-spacer>
+                                <v-dialog v-model="dialog" max-width="500px">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn
+                                                color="primary"
+                                                dark
+                                                class="mb-2"
+                                                v-bind="attrs"
+                                                v-on="on"
+                                        >New Item
+                                        </v-btn>
+                                    </template>
+                                    <v-card>
+                                        <v-card-title>
+                                            <span class="headline">{[ formTitle ]}</span>
+                                        </v-card-title>
+
+                                        <v-card-text>
+                                            <v-container>
+                                                <v-row>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-text-field v-model="editedItem.first_name"
+                                                                      :rules="nameRules"
+                                                                      label="First name"></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-text-field v-model="editedItem.last_name"
+                                                                      required
+                                                                      :rules="[rules.required]"
+                                                                      label="Last name"></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-text-field v-model="editedItem.city"
+                                                                      label="City"></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-text-field v-model="editedItem.country"
+                                                                      label="Country"></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-text-field v-model="editedItem.phone_number"
+                                                                      :rules="[rules.required]"
+                                                                      label="Phone number"></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-text-field v-model="editedItem.email" type="email"
+                                                                      required
+                                                                      :rules="emailRules"
+                                                                      label="Email"></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-menu
+                                                                v-model="menu"
+                                                                :close-on-content-click="false"
+                                                                :nudge-right="40"
+                                                                transition="scale-transition"
+                                                                offset-y
+                                                                min-width="290px"
+                                                        >
+                                                            <template v-slot:activator="{ on, attrs }">
+                                                                <v-text-field
+                                                                        v-model="editedItem.date_of_birth"
+                                                                        label="Picker without buttons"
+                                                                        prepend-icon="event"
+                                                                        readonly
+                                                                        v-bind="attrs"
+                                                                        v-on="on"
+                                                                ></v-text-field>
+                                                            </template>
+                                                            <v-date-picker v-model="editedItem.date_of_birth"
+                                                                           @input="menu = false"></v-date-picker>
+                                                        </v-menu>
+                                                    </v-col>
+                                                </v-row>
+                                            </v-container>
+                                        </v-card-text>
+
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+                                            <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+                            </v-toolbar>
+                        </template>
+                        <template v-slot:item.actions="{ item }">
+                            <v-icon
+                                    small
+                                    class="mr-2"
+                                    @click="editItem(item)"
+                            >
+                                mdi-pencil
+                            </v-icon>
+                            <v-icon
+                                    small
+                                    @click="deleteItem(item)"
+                            >
+                                mdi-delete
+                            </v-icon>
+                        </template>
+                        {#                        <template v-slot:no-data>#}
+                        {#                            <v-btn color="primary" @click="initialize">Reset</v-btn>#}
+                        {#                        </template>#}
+                    </v-data-table>
+                </v-row>
+            </v-container>
+        </v-app>
+    </div>
+
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/contacts.js' %}"></script>
+{% endblock %}

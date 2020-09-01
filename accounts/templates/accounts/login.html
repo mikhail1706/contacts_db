@@ -1,0 +1,91 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+    <v-col cols="3">
+        <div class="text-center text-h4 mb-5">Please sign in</div>
+        <v-form ref="form" method="post">
+            {% csrf_token %}
+            <v-text-field
+                    id="id_username"
+                    name="username"
+                    label="Username"
+                    outlined
+                    required>
+            </v-text-field>
+
+            {% if form.username.errors %}
+                <div class="v-messages theme--light error--text mb-4 font-weight-bold" role="alert"
+                     style="margin-top: -25px">
+                    <div class="v-messages__wrapper">
+                        {% for error in form.username.errors %}
+                            <div class="v-messages__message message-transition-enter-to">{{ error|escape }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <v-text-field
+                    id="id_password"
+                    type="password"
+                    name="password"
+                    label="Password"
+                    required
+                    outlined
+            ></v-text-field>
+
+            {% if form.password.errors %}
+                <div class="v-messages theme--light error--text mb-4 font-weight-bold" role="alert"
+                     style="margin-top: -25px">
+                    <div class="v-messages__wrapper">
+                        {% for error in form.password.errors %}
+                            <div class="v-messages__message message-transition-enter-to">{{ error|escape }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if form.errors %}
+                <div class="v-messages theme--light error--text mb-4 font-weight-bold" role="alert"
+                     style="margin-top: -10px">
+                    <div class="v-messages__wrapper">
+                        {% for error in form.non_field_errors %}
+                            <div class="v-messages__message message-transition-enter-to">{{ error|escape }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <v-btn color="blue darken-2"
+                   dark
+                   min-width="100%"
+                   large
+                   type="submit"
+                   class="">
+                Sign in
+            </v-btn>
+            <v-btn color="success darken-2"
+                   dark
+                   min-width="100%"
+                   large
+                   href="{% url 'django_registration_register' %}"
+                   class="mt-2">
+                Registration
+            </v-btn>
+        </v-form>
+        <div class="mt-5 mb-3 text--secondary text-center">&copy; Contacts DataBase 2020</div>
+    </v-col>
+
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            data: {},
+            methods: {}
+        })
+    </script>
+{% endblock %}

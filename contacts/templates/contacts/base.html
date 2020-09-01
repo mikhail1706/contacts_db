@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+
+    <!-- iziToast -->
+    <link rel="stylesheet" href="{% static 'lib/izitoast/css/iziToast.min.css' %}">
+
+    <!-- fontawesome -->
+    <link href="{% static 'lib/fontawesome/css/all.min.css' %}" rel="stylesheet">
+
+    <style>
+        [v-cloak] > * {
+            display: none;
+        }
+    </style>
+
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+        axios.defaults.xsrfCookieName = "csrftoken";
+    </script>
+
+</head>
+<body>
+
+
+{% block content %}
+
+{% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<!-- Compiled and minified JavaScript -->
+{% block js %}
+{% endblock %}
+</body>
+</html>

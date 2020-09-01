@@ -1,0 +1,42 @@
+# Support platform
+/*/migrations/*
+!*/migrations/__init__.py
+/db_data
+databases.json
+
+/config/local.py
+/config/docker_local.py
+
+# Django
+*.pyc
+*.cpython-36.pyc
+__pycache__
+/logs
+/static/
+/media/admin_avatar
+
+
+
+# PyCharm
+/.idea/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Environments
+venv/
+
+# mkdocs documentation
+/site
+
+# Unix socket
+*.sock.lock
