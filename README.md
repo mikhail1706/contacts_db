@@ -1,6 +1,6 @@
 - Create directory for project and then clone it:
 ```
-mkdir sp && cd sp
+mkdir contacts_db && cd contacts_db
 git clone https://github.com/mikhail1706/contacts_db.git
 ```
 
