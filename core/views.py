@@ -4,13 +4,17 @@ import traceback
 
 from django.db import transaction
 from django.http import JsonResponse
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 
 logger = logging.getLogger(__name__)
 
 JSON_DUMPS_PARAMS = {
     'ensure_ascii': False
 }
+
+
+class MainPage(TemplateView):
+    template_name = 'main_page.html'
 
 
 def ret(json_object, status=200):
@@ -30,6 +34,7 @@ def error_response(exception):
 
 def base_view(fn):
     """Decorator for all views, process exception"""
+
     @functools.wraps(fn)
     def inner(request, *args, **kwargs):
 
@@ -47,11 +52,13 @@ def base_view(fn):
             logger.error(f'errorMsg: {str(e)} viewClass: {view} path: {path} httpMethod: {method} user: {username}'
                          f'\ntraceback: {traceback.format_exc()}')
             return error_response(e)
+
     return inner
 
 
 class BaseView(View):
     """ Base class for all views, process exception"""
+
     def dispatch(self, request, *args, **kwargs):
         view = request.resolver_match.view_name
         path = request.path

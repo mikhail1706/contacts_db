@@ -1,0 +1,39 @@
+{% extends 'contacts/base.html' %}
+{% load static %}
+
+{% block title %} Main {% endblock %}
+
+
+
+{% block content %}
+    <div id="app">
+        <v-app>
+            <v-container fluid>
+                <v-row>
+                    <v-col cols="12">
+                        <v-row align="center" justify="center" style="height: 90vh">
+                            <v-card class="ma-3 pa-6"
+                                    width="300px"
+                                    outlined
+                                    tile>
+                                <v-btn color="success darken-2"
+                                       dark
+                                       min-width="100%"
+                                       large
+                                       href="{% url 'contacts' %}"
+                                       class="mt-2">
+                                    Contacts
+                                </v-btn>
+                            </v-card>
+                        </v-row>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-app>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'js/connect_vuetify.js' %}"></script>
+{% endblock %}

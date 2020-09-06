@@ -9,6 +9,7 @@ var vm = new Vue({
         dialog: false,
         editedIndex: -1,
         editedItem: {
+            id: '',
             first_name: '',
             last_name: '',
             city: '',
@@ -18,6 +19,7 @@ var vm = new Vue({
             date_of_birth: new Date().toISOString().substr(0, 10),
         },
         defaultItem: {
+            id: '',
             first_name: '',
             last_name: '',
             city: '',
@@ -43,16 +45,14 @@ var vm = new Vue({
             v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ]
     },
-    computed: {
-        formTitle() {
-            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-        },
-    },
     methods: {
         editItem(item) {
             this.editedIndex = this.contacts.indexOf(item)
-            this.editedItem = Object.assign({}, item)
             this.dialog = true
+            this.editedItem = Object.assign({}, item)
+        },
+        confirmDeleting(){
+
         },
         deleteItem(item) {
             const index = this.contacts.indexOf(item)
@@ -67,7 +67,27 @@ var vm = new Vue({
         },
         save() {
             if (this.editedIndex > -1) {
-                Object.assign(this.contacts[this.editedIndex], this.editedItem)
+                axios.post(`/contacts/update/${this.editedItem.id}/`, this.editedItem)
+                    .then(response => {
+                        if (response.data.success) {
+                            let contactIndex = this.contacts.findIndex(contact => contact.id === this.editedItem.id)
+                            Object.assign(this.contacts[contactIndex], this.editedItem)
+                            this.close()
+
+                            iziToast.success({
+                                timeout: 3000,
+                                position: 'topLeft',
+                                message: response.data.msg,
+                            });
+                        } else {
+                            iziToast.error({
+                                timeout: 3000,
+                                title: 'Error',
+                                message: response.data.msg,
+                            });
+                        }
+                    })
+
             } else {
                 axios.post('/contacts/create/', this.editedItem)
                     .then(response => {
@@ -75,6 +95,7 @@ var vm = new Vue({
                             this.contacts.push(
                                 response.data.data.new_contact
                             )
+                            this.close()
                             iziToast.success({
                                 timeout: 3000,
                                 position: 'topLeft', // bottomRight, bottomLeft, topRight, topLeft,
@@ -90,9 +111,23 @@ var vm = new Vue({
                         }
                     })
             }
-            this.close()
+
         },
-        customFilter(slot) {
+        getAllData() {
+            axios.all([
+                axios.get('/contacts/all/'),
+            ]).then(axios.spread((contacts,) => {
+                    this.contacts = contacts.data.data.contacts;
+                    this.headers = contacts.data.data.headers;
+
+                    this.cities = contacts.data.data.cities;
+                    this.countries = contacts.data.data.countries;
+                }
+            ))
+        },
+    },
+    computed: {
+        filteredContacts() {
             let filteredContacts = this.contacts
             if (this.citySearch) {
                 filteredContacts = this.contacts
@@ -108,19 +143,8 @@ var vm = new Vue({
             }
             return filteredContacts
         },
-        getAllData() {
-            axios
-                .all([
-                    axios.get('/contacts/all/'),
-                ])
-                .then(axios.spread((contacts,) => {
-                        this.contacts = contacts.data.data.contacts;
-                        this.headers = contacts.data.data.headers;
-
-                        this.cities = contacts.data.data.cities;
-                        this.countries = contacts.data.data.countries;
-                    }
-                ))
+        formTitle() {
+            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
         },
     },
     watch: {
